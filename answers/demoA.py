@@ -94,7 +94,6 @@ def itSolver(grid):
             x, y = postup(position)
         # position is the next place to fill
 
-
         for num in range(1, states+1):
             if valid(g, position, num): # on grid and follows rules
                 g[x, y] = num
@@ -102,11 +101,27 @@ def itSolver(grid):
                 movie.append((copy.deepcopy(g), position+1))
     return movie
 
-def draw_block(x, y, acolor):
-    pygame.draw.rect(screen, acolor, [pad + (pad + sqSize) * x + (x//boxesDim)*pad,
+def draw_block(x, y, state, acolor):
+    colour_box = pygame.Rect([pad + (pad + sqSize) * x + (x//boxesDim)*pad,
                                       pad + (pad + sqSize) * y+ (y//boxesDim)*pad,
                                       sqSize, sqSize])
+    pygame.draw.rect(screen, acolor, colour_box)
+    
+    # Draw number on blocks
+    if state == 0:
+        text_state = ''
+    else:
+        text_state = str(state)
+    
+    text = font.render(text_state, True, white, black)
+    textRect = text.get_rect()
+    text.set_alpha(150)
 
+    # set the center of the rectangular object.
+    textRect.center = colour_box.center
+    
+    # Draw text
+    screen.blit(text,textRect)
 
 def draw(gr):
     cols = gr[0].shape[0]
@@ -118,7 +133,7 @@ def draw(gr):
             state_color.hsva = [(360 // states) * state, 100, 50]
             if state == 0:
                 state_color = pygame.Color(0, 0, 0)
-            draw_block(x, y, state_color)
+            draw_block(x, y, state, state_color)
 
 
 # given
@@ -154,6 +169,13 @@ pygame.display.set_caption("CPSC203 Sudoku")
 
 i = 0
 # -------- Main Program Loop -----------
+
+# Initialize pygame and fonts
+pygame.init()
+font = pygame.font.Font('freesansbold.ttf', 24)
+white = (255, 255, 255)
+black = (0, 0, 0)
+
 while True:
     # --- Main event loop
     handleInputEvents()
