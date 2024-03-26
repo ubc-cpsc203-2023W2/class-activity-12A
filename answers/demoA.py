@@ -127,11 +127,11 @@ def handleInputEvents():
         if event.type == pygame.QUIT:  # If user clicked close...
             sys.exit(0)  # quit
 
-states = 9
+states = 4
 boxesDim = int(math.sqrt(states))
 
-g = board((states, states), initBIG)
-#g = board((states, states), initStart)
+#g = board((states, states), initBIG)
+g = board((states, states), initStart)
 movie = itSolver(g.data)
 print(movie)
 print(len(movie))
@@ -172,8 +172,8 @@ while True:
     pygame.display.flip()
 
     # --- Limit to 60 frames per second
-    #clock.tick(2)
-    clock.tick(160)
+    clock.tick(2)
+    #clock.tick(160)
 
 # Close the window and quit.
 pygame.quit()
