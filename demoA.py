@@ -1,8 +1,14 @@
 import numpy as np
 from collections import deque
 import copy
+import math
 
-sud = np.full((4,4),0)
+STATES = 4
+BLOCK_SIZE = int(math.sqrt(STATES))
+# Note that STATES must be a perfect square.
+assert(BLOCK_SIZE * BLOCK_SIZE == STATES)
+
+sud = np.full((STATES,STATES), 0)
 sud[0,0] = 3
 sud[3,1] = 2
 sud[1,3] = 1
@@ -13,7 +19,7 @@ def postup(p):
     # use clever math to change a position number into x,y coordinates
     return 
 
-def valid(grid,position,num):
+def valid(board, position, num):
 
     # check to see if position is on the board...
 
@@ -28,9 +34,10 @@ def valid(grid,position,num):
         return True
 
 
-def itSolver(grid):
+def sudokuSolver(board):
 
     # initialize a deque to use as a stack
+    
     # initialize a position and its x,y rep
 
     # place initial grid and position in stack (use a copy of the grid!!
@@ -41,11 +48,8 @@ def itSolver(grid):
 
         # advance over filled locations, if necessary
 
-
-        print("________________________")
-        print(position)
-        print("________________________")
-        print(g)
+        print(f"Trying to fill position {position} in board:")
+        print(board)
         print()
 
         # try out all the possible neighbors and for each...
@@ -53,5 +57,4 @@ def itSolver(grid):
             # put a copy of the grid and its position on the stack
 
 
-itSolver(sud)
-
+sudokuSolver(sud)
